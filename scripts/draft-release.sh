@@ -36,18 +36,20 @@ cat >"$notes_file" <<EOF
 
 Choose the one installer that matches your device:
 
-- **macOS 13+ · Intel 64-bit:** [Download the Intel DMG]($(asset_url "$mac_x64"))
-- **macOS 13+ · Apple Silicon:** [Download the ARM64 DMG]($(asset_url "$mac_arm64"))
-- **Windows 10+ · Intel/AMD 64-bit:** [Download the Windows installer]($(asset_url "$windows_x64"))
-- **Windows 11+ · ARM64:** [Download the Windows ARM installer]($(asset_url "$windows_arm64"))
-- **Ubuntu 22.04+ or compatible · Intel/AMD 64-bit:** [Download the AppImage]($(asset_url "$linux_x64"))
-- **Ubuntu 22.04+ or compatible · ARM64:** [Download the AppImage]($(asset_url "$linux_arm64"))
+- **macOS · Intel 64-bit:** [Download the Intel DMG]($(asset_url "$mac_x64"))
+- **macOS · Apple Silicon:** [Download the ARM64 DMG]($(asset_url "$mac_arm64"))
+- **Windows · Intel/AMD 64-bit:** [Download the Windows installer]($(asset_url "$windows_x64"))
+- **Windows · ARM64:** [Download the Windows ARM installer]($(asset_url "$windows_arm64"))
+- **Linux · Intel/AMD 64-bit:** [Download the AppImage]($(asset_url "$linux_x64"))
+- **Linux · ARM64:** [Download the AppImage]($(asset_url "$linux_arm64"))
 
 Not sure which one to choose? Most Windows and Linux users need Intel/AMD 64-bit. Macs from late 2020 onward usually use Apple Silicon.
 
 ### Technical files
 
 \`latest.json\` and the macOS \`.app.tar.gz\` archives support in-app updates. \`SHA256SUMS.txt\` supports integrity checks. You do not need to download these files for a normal installation.
+
+**Full Changelog**: [https://github.com/$GH_REPO/commits/$RELEASE_TAG](https://github.com/$GH_REPO/commits/$RELEASE_TAG)
 EOF
 
 if draft=$(gh release view "$RELEASE_TAG" --json isDraft --jq '.isDraft'); then
