@@ -2,3 +2,22 @@
 # llama.cpp enables Metal by default on macOS even when no GPU layers are
 # requested. Keep the search runtime genuinely CPU-only on every platform.
 GGML_METAL = "OFF"
+
+# GGML_NATIVE=OFF still defaults these x86 extensions to ON in native builds.
+# Use the x86-64 baseline for shipped binaries, including Windows ARM emulation.
+# These options do not disable ARM's NEON backend.
+GGML_SSE42 = "OFF"
+GGML_AVX = "OFF"
+GGML_AVX2 = "OFF"
+GGML_BMI2 = "OFF"
+GGML_FMA = "OFF"
+GGML_F16C = "OFF"
+
+# The C++ library has its own CRT setting, separate from Rust's crt-static.
+LLAMA_STATIC_CRT = "1"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.aarch64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

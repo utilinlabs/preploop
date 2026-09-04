@@ -67,7 +67,9 @@ fn get_or_init_backend() -> Result<Arc<LlamaBackend>, EmbeddingError> {
     }
     let mut backend = LlamaBackend::init()
         .map_err(|e| EmbeddingError::ModelLoad(format!("llama backend init failed: {e}")))?;
-    backend.void_logs();
+    if !cfg!(debug_assertions) {
+        backend.void_logs();
+    }
     let arc_backend = Arc::new(backend);
     *guard = Some(Arc::clone(&arc_backend));
     Ok(arc_backend)
@@ -150,6 +152,12 @@ impl LlamaCppEmbeddingEngine {
         })?;
 
         if guard.is_none() {
+            #[cfg(debug_assertions)]
+            eprintln!(
+                "Loading embedding model {:?}; metadata={:?}",
+                self.gguf_path,
+                std::fs::metadata(&self.gguf_path)
+            );
             // First call — load backend and model now.
             let backend = get_or_init_backend()?;
 
@@ -157,6 +165,8 @@ impl LlamaCppEmbeddingEngine {
 
             let model = LlamaModel::load_from_file(&backend, &self.gguf_path, &model_params)
                 .map_err(|e| EmbeddingError::ModelLoad(format!("{e}")))?;
+            #[cfg(debug_assertions)]
+            eprintln!("Embedding model loaded successfully");
 
             *guard = Some(LoadedModel {
                 backend,
