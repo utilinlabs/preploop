@@ -193,7 +193,7 @@
         {#each historyEntries as entry, index (entry.id)}
           {#if index > 0}
             <div
-              class="mx-8 h-px bg-border/45 sm:mx-12"
+              class="mx-0 h-px bg-border/45 sm:mx-2"
               aria-hidden="true"
             ></div>
           {/if}
