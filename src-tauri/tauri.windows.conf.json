@@ -1,0 +1,19 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "bundle": {
+    "windows": {
+      "nsis": {
+        "installMode": "perMachine",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "headerImage": "icons/installer-header.bmp",
+        "sidebarImage": "icons/installer-sidebar.bmp",
+        "startMenuFolder": "PrepLoop"
+      }
+    },
+    "resources": {
+      "models/granite-r2-q8_0.gguf": "models/granite-r2-q8_0.gguf",
+      "models/search-index/": "models/search-index/"
+    }
+  }
+}
